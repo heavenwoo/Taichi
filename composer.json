@@ -13,7 +13,14 @@
     "require": {
         "php": ">=5.6.10"
     },
+    "require-dev": {
+        "symfony/var-dumper": "^3.0",
+        "phpunit/phpunit": "~4.0"
+    },
     "autoload": {
+        "files": [
+            "src/Bee/Support/helpers.php"
+        ],
         "psr-4": {
             "Bee\\": "src/Bee"
         }

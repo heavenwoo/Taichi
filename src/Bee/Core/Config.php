@@ -2,43 +2,31 @@
 namespace Bee\Core;
 
 use ArrayAccess;
-use ArrayIterator;
 
-class Config extends ArrayIterator
+class Config implements ArrayAccess
 {
-    private static $instance = [];
-    
-    private $conf = [];
-    
-    public static function getInstance($key)
-    {
-        if (!isset(self::$instance[$key])) self::$instance[$key] = new self();
-        
-        return self::$instance[$key];
-    }
-    
-    public function load($config_file)
-    {
-        $this->conf = Loader::load($config_file);
+    private $items = [];
 
-        return $this->conf;
-    }
-    
-    public function get($key)
+    public function __construct(array $items = [])
     {
-        if (isset($this->conf[$key])) return $this->conf[$key];
-        return '';
+        $this->items = $items;
+    }
+
+    public function get($key, $default = null)
+    {
+        return (isset($this->items[$key])) ? $this->items[$key] : $default;
+        //return $this->items[$key] ?? $default; //PHP 7.0
     }
     
     public function set($key, $value)
     {
-        $this->conf[$key] = $value;
+        $this->items[$key] = $value;
     }
     
     public function del($key)
     {
-        if (isset($this->conf[$key])) {
-            unset($this->conf[$key]); 
+        if (isset($this->items[$key])) {
+            unset($this->items[$key]);
             return true;
         }
         
@@ -47,30 +35,26 @@ class Config extends ArrayIterator
     
     public function all()
     {
-        return $this->conf;
+        return $this->items;
     }
     
     public function offsetExists($offset)
     {
-        return isset($this->conf[$offset]);
-        //return parent::offsetExists($offset);
+        return isset($this->items[$offset]);
     }
     
     public function offsetGet($offset)
     {
         return $this->get($offset);
-        //return parent::offsetGet($offset);
     }
     
     public function offsetSet($offset, $value)
     {
         $this->set($offset, $value);
-        //return parent::offsetSet($offset, $value);
     }
     
     public function offsetUnset($offset)
     {
         return $this->del($offset);
-        //return parent::offsetUnset($offset);
     }
 }

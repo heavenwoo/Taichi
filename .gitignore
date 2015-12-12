@@ -1,0 +1,8 @@
+/vendor/
+/app/
+/config/
+/resources/
+/storage/
+/web/
+bootstrap.php
+index.php

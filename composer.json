@@ -1,0 +1,21 @@
+{
+    "name": "heavenwoo/bee",
+    "description": "A simple PHP framework",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Heaven Woo",
+            "email": "heavenwoo@live.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bee\\": "src/Bee"
+        }
+    }
+}

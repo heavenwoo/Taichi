@@ -4,5 +4,6 @@
 /resources/
 /storage/
 /web/
+/.idea/
 bootstrap.php
 index.php

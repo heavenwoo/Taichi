@@ -15,13 +15,14 @@ class Container implements ArrayAccess
 
     protected $instances = [];
 
-    public function __construct()
+    protected function __construct()
     {
+        //throw new CoreException('Can\'t instance it!');
     }
 
     public static function getInstance()
     {
-        if (is_null(static::$instance)) {
+        if (!static::$instance instanceof static) {
             static::$instance = new static;
         }
 
@@ -39,8 +40,10 @@ class Container implements ArrayAccess
     {
         // 如果是匿名函数（Anonymous functions），也叫闭包函数（closures）
         if ($concrete instanceof Closure) {
-            // 执行闭包函数，并将结果
-            return $concrete($this, $parameters);
+            // 执行闭包函数，并将结果返回
+            $this->instances[$concrete] = $concrete($this, $parameters);
+
+            return $this->instances[$concrete];
         }
 
         /** @var ReflectionClass $reflector */
@@ -72,14 +75,16 @@ class Container implements ArrayAccess
         );
 
         // 创建一个类的新实例，给出的参数将传递到类的构造函数。
-        return $reflector->newInstanceArgs($instances);
+        $this->instances[$concrete] = $reflector->newInstanceArgs($instances);
+
+        return $this->instances[$concrete];
     }
 
     /**
      * Resolve all of the dependencies from the ReflectionParameters.
      *
-     * @param  array  $parameters
-     * @param  array  $primitives
+     * @param  array $parameters
+     * @param  array $primitives
      * @return array
      */
     protected function getDependencies(array $parameters, array $primitives = [])
@@ -103,7 +108,7 @@ class Container implements ArrayAccess
             }
         }
 
-        return (array) $dependencies;
+        return (array)$dependencies;
     }
 
     /**
@@ -125,7 +130,7 @@ class Container implements ArrayAccess
     /**
      * Resolve a class based dependency from the container.
      *
-     * @param  \ReflectionParameter  $parameter
+     * @param  \ReflectionParameter $parameter
      * @return mixed
      *
      * @throws \Bee\Exception\CoreException
@@ -151,8 +156,8 @@ class Container implements ArrayAccess
     /**
      * If extra parameters are passed by numeric ID, rekey them by argument name.
      *
-     * @param  array  $dependencies
-     * @param  array  $parameters
+     * @param  array $dependencies
+     * @param  array $parameters
      * @return array
      */
     protected function keyParametersByArgument(array $dependencies, array $parameters)
@@ -170,22 +175,22 @@ class Container implements ArrayAccess
 
     public function offsetExists($offset)
     {
-        // TODO: Implement offsetExists() method.
+        return isset($this->instances[$offset]);
     }
 
     public function offsetGet($offset)
     {
-        // TODO: Implement offsetGet() method.
+        return $this->instances[$offset] ?: null;
     }
 
     public function offsetSet($offset, $value)
     {
-        // TODO: Implement offsetSet() method.
+        $this->instances[$offset] = $value;
     }
 
     public function offsetUnset($offset)
     {
-        // TODO: Implement offsetUnset() method.
+        unset($this->instances[$offset]);
     }
 
     public function __set($name, $value)

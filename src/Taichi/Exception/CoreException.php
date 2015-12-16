@@ -1,9 +1,14 @@
 <?php
 namespace Taichi\Exception;
+
 use Exception;
 use SplFileObject;
 
 class CoreException extends Exception
+{
+}
+
+class CoreException1 extends Exception
 {
     public function __construct($message, $code = null)
     {

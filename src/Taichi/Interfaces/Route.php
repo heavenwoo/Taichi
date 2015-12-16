@@ -3,7 +3,7 @@ namespace Taichi\Interfaces;
 
 interface Route
 {
-    public function get();
+    public function get($route, $param);
 
     public function post();
 
@@ -11,4 +11,5 @@ interface Route
 
     public function delete();
 
+    public function restful();
 }

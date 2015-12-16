@@ -1,9 +1,15 @@
 <?php
 namespace Taichi\Http;
 
-class Router
+use Taichi\Interfaces\Route as RouteInterface;
+
+class Router implements RouteInterface
 {
     protected $routes = [];
+
+    protected $controller = null;
+
+    protected $action = null;
 
     protected $methods = [
         'get',
@@ -12,9 +18,29 @@ class Router
         'delete',
     ];
 
-    public static function get()
+    public function get($route, $param)
     {
+        // TODO: Implement get() method.
+    }
 
+    public function post()
+    {
+        // TODO: Implement post() method.
+    }
+
+    public function put()
+    {
+        // TODO: Implement put() method.
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
+    }
+
+    public function restful()
+    {
+        // TODO: Implement restful() method.
     }
 
     public function go()
@@ -25,14 +51,5 @@ class Router
     protected function parse($method, $args)
     {
 
-    }
-
-    public function __callStatic($method, $args)
-    {
-        if (in_array($method = strtolower($method), $this->methods)) {
-            return $this->parse($method, $args);
-        }
-
-        throw new \InvalidArgumentException('Not defined router');
     }
 }

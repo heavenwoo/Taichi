@@ -86,8 +86,8 @@ class Container implements ArrayAccess
 
         // 若无构造函数，直接实例化并返回
         if (is_null($constructor)) {
-            $this->aliases[$alias] = new $concrete;
-            return $this->aliases[$alias];
+            $this->instances[$alias] = new $concrete;
+            return $this->instances[$alias];
         }
 
         // 取构造函数参数,通过 ReflectionParameter 数组返回参数列表

@@ -43,3 +43,14 @@ if (!function_exists('config')) {
         return ioc('config')->get($key, $default);
     }
 }
+
+if (!function_exists('router')) {
+    function router($method = null, $route = null, $param = null)
+    {
+        if (is_null($method)) {
+            return ioc('router');
+        }
+
+        return ioc('router')->$method($route, $param);
+    }
+}

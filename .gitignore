@@ -5,6 +5,7 @@
 /storage/
 /web/
 /.idea/
+/src/.DS_Store
 .DS_Store
 bootstrap.php
 index.php

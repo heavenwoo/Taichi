@@ -5,11 +5,11 @@ interface Route
 {
     public function get($route, $param);
 
-    public function post();
+    public function post($route, $param);
 
-    public function put();
+    public function put($route, $param);
 
-    public function delete();
+    public function delete($route, $param);
 
     public function restful();
 }

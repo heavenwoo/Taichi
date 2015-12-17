@@ -14,7 +14,10 @@
         "php": ">=7.0.0",
         "symfony/finder": "^3.0",
         "filp/whoops": "^1.1",
-        "twig/twig": "~1.0"
+        "twig/twig": "~2.0",
+        "klein/klein": "^2.1",
+        "symfony/twig-bridge": "^3.0",
+        "symfony/templating": "^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^3.0",

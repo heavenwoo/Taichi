@@ -28,11 +28,12 @@ class Config implements ArrayAccess, ConfigInterface
             return $this->items[$key];
         }
 
-        foreach ($this->items as $seg) {
-            if (!array_key_exists($seg, $this->items)) {
+        $value = $this->items;
+        foreach (explode('.', $key) as $seg) {
+            if (!array_key_exists($seg, $value)) {
                 return $default;
             }
-            $value = $this->items[$seg];
+            $value = $value[$seg];
         }
 
         return $value;

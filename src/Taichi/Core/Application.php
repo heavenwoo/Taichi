@@ -1,4 +1,4 @@
-<?php
+<?php //declare(strict_types=1);
 namespace Taichi\Core;
 
 use Taichi\Http\Router;
@@ -27,7 +27,7 @@ class Application
         $this->loadConfig();
 
         $this->initException();
-$html = <<<TC
+        $html = <<<TC
 <!DOCTYPE html>
 <html>
 
@@ -63,7 +63,8 @@ $html = <<<TC
 </html>
 TC;
 //echo $html;
-        //dd(file_get_contents('php://input', 'r'), $_SERVER, $_REQUEST, $_REQUEST['HTTP_X_HTTP_METHOD_OVERRIDE'] ?? 'none');
+        dd(file_get_contents('php://input', 'r'), $_SERVER, $_REQUEST,
+            $_REQUEST['HTTP_X_HTTP_METHOD_OVERRIDE'] ?? 'none');
         router('get', '/', '@todo');
         router()->get('/post', 'PostController#index');
     }
@@ -77,7 +78,7 @@ TC;
 
     public function initException()
     {
-        $this->exceptionHandler     = new Run();
+        $this->exceptionHandler = new Run();
         $handler = (php_sapi_name() == 'cli') ? new PlainTextHandler() : new PrettyPageHandler();
 
         $this->exceptionHandler->pushHandler($handler);
@@ -87,8 +88,8 @@ TC;
 
     public function loadConfig()
     {
-        foreach(Finder::create()->files()->name('*.php')->in(TAICHI_ROOT . 'config') as $file) {
-            config()->set(basename($file, '.php'), require $file);
+        foreach (Finder::create()->files()->name('*.php')->in(TAICHI_ROOT . 'config') as $file) {
+            config()->set(basename((string)$file, '.php'), require $file);
         }
     }
 

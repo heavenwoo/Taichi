@@ -23,6 +23,11 @@
         "symfony/var-dumper": "^3.0",
         "phpunit/phpunit": "~4.0"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
     "autoload": {
         "files": [
             "src/Taichi/Support/helpers.php"
